@@ -1,6 +1,5 @@
 import cv2
 import numpy as np
-import os
 from sklearn.neighbors import KNeighborsClassifier
 
 path = "faces.npy"
@@ -10,9 +9,9 @@ data = np.load(path)
 X = data[:, :-1].astype(int)
 y = data[:, -1]
 
-model = KNeighborsClassifier(4)
+model = KNeighborsClassifier(2)
 model.fit(X, y)
-
+print(X.shape, y.shape)
 cap = cv2.VideoCapture(0)
 classifier = cv2.CascadeClassifier("./haarcascade_frontalface_default.xml")
 
@@ -28,16 +27,16 @@ while True:
             image = cv2.rectangle(image, (x, y), (x + w, y + h), (255, 0, 0), 5)
 
             chopped = image[y:y + h, x:x + w]
-            chopped = cv2.resize(chopped, (100, 100))
+            chopped = cv2.resize(chopped, (50, 50))
             gray = cv2.cvtColor(chopped, cv2.COLOR_BGR2GRAY)
             names = model.predict([gray.flatten()])
-            '''print(names)
+            #print(names)
             cv2.putText(image, names[0],
                         (x, y - 20),
                         cv2.FONT_HERSHEY_SIMPLEX,
                         2,
                         (0, 255, 0),
-                        4)'''
+                        4)
 
         cv2.imshow("Predictor", image)
 

@@ -9,7 +9,7 @@ classifier = cv2.CascadeClassifier("./haarcascade_frontalface_default.xml")
 
 name = input("Enter your name: ")
 print(name)
-count = 2
+count = 10
 
 data = []
 
